@@ -43,8 +43,8 @@
 | `flutter test` | ✅ **61 / 61 全绿**（纯逻辑、编辑会话真文件读写、界面交互） |
 | `flutter build apk --debug` | ✅ 成功（含 libmpv.so 三个 ABI） |
 | `flutter build apk --release` | ✅ 成功，产物 `dist/dictation-notepad-android-release.apk`（约 147 MB） |
-| `flutter build windows` | ⚠️ **未验证**：这台机器没有 Visual Studio（Flutter 的 Windows 桌面版只支持 MSVC，MinGW/GCC 不行） |
-| 真机运行 | ⚠️ **未验证**：开发机没有连手机、也没有模拟器镜像 |
+| `flutter build windows --release` | ✅ 成功（exe + 全部 DLL，含 `libmpv-2.dll`），启动冒烟测试通过：进程存活、media_kit 插件注册正常。构建需要 **VS Build Tools 2022（C++ 工作负载）** 和**符号链接权限**（开发者模式，或直接提权构建） |
+| 真机 / 桌面 UI 逐项点测 | ⚠️ **未做**：开发机没有连手机、也没有模拟器；桌面版只做了启动冒烟测试，没有逐项点过界面 |
 
 > 详细记录（含实测踩到的真实问题与修法）见 [docs/测试清单.md](docs/测试清单.md)。
 
@@ -104,7 +104,7 @@ powershell -ExecutionPolicy Bypass -File .\tool\build_windows.ps1
 `C:\dev\cross-dictation-notepad`。放在含中文的路径下会依次遇到：
 
 1. `flutter analyze` 的分析服务器崩溃（LSP 消息被截断：`FormatException: Unterminated string`）；
-2. **release 构建失败**：AOT 编译器拿到乱码路径、读不到 `app.dill`
+2. **release 构建失败**（Android 与 Windows 都会）：AOT 编译器拿到乱码路径、读不到 `app.dill`
    （`Unable to read file: C:\锟斤拷...app.dill`）；
 3. Flutter SDK 若也在中文路径下，着色器编译器（impellerc）取到乱码路径而失败；
 4. Android Gradle 插件直接拒绝（`Your project path contains non-ASCII characters`）。
@@ -152,8 +152,9 @@ powershell -ExecutionPolicy Bypass -File .\tool\build_windows.ps1
 
 ## 九、已知限制
 
-- **Windows 桌面版未在本机验证**：需要 Visual Studio 2022 + C++ 桌面开发 + Windows SDK。
-  本机只有 MSYS2 的 GCC，Flutter 的 Windows 目标不支持它。
+- **Windows 桌面版已能编译通过，但界面未逐项点测**：产物是「一个文件夹」（exe + 若干 DLL + `data/`），
+  分发时要整个文件夹一起拷。构建需要 Visual Studio 2022 的 C++ 桌面开发工作负载，
+  以及**符号链接权限**（开启开发者模式并重启，或者以管理员身份构建）。
 - **手机端未在真机上跑过**（开发机没有设备/模拟器）：APK 能编出来、通过 `apksigner` 校验，
   但没有实际点过界面。第一次真机运行请按 [docs/测试清单.md](docs/测试清单.md) 第四节走一遍。
 - **release APK 用的是 Android 调试证书签名**（Flutter 模板默认）：可以直装，但不能上架。

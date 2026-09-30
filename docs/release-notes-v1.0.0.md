@@ -33,8 +33,9 @@ one codebase for Android phones and Windows PCs.
 
 - `flutter analyze`：**No issues found!**（零 error / warning / info）
 - `flutter test`：**61/61 通过**
-- `flutter build apk --release`：✅ 成功（含 `libmpv.so` 三个 ABI，`libapp.so` AOT）
-- Windows 桌面版依赖 Visual Studio（MSVC），构建脚本见 `tool/build_windows.ps1`
+- `flutter build apk --release`：✅ 成功（含 `libmpv.so` 三个 ABI，`libapp.so` AOT），`apksigner` 校验通过
+- `flutter build windows --release`：✅ 成功（exe + 13 个 DLL，含 `libmpv-2.dll`），启动冒烟测试通过
+- 构建脚本：`tool/bootstrap_platforms.ps1`（生成并修补平台目录）、`tool/build_windows.ps1`（一键编译 + 建桌面快捷方式）
 - 真机 UI 尚未逐项点过，手工测试清单见 `docs/测试清单.md`
 
 ## 注意 / Notes
