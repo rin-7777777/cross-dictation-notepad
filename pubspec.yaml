@@ -12,8 +12,13 @@ dependencies:
     sdk: flutter
 
   # 视频播放：media_kit（libmpv），Android / Windows 均官方支持。
+  #
+  # 注意：必须用 media_kit_video 2.x —— 1.x 只支持到 Flutter 3.37 左右，
+  # 在 Flutter 3.38+ 上视频纹理不会被引擎合成，表现是
+  # 「有声音、进度和倍速都正常，但画面全黑」（2.0 的更新日志写着
+  # "feat: flutter 3.38.x support" / "fix: flutter 3.38.x crash"）。
   media_kit: ^1.1.0
-  media_kit_video: ^1.2.0
+  media_kit_video: ^2.0.0
   media_kit_libs_video: ^1.0.0
 
   # 文件夹选择（Android 走 SAF，Windows 走系统目录对话框）。

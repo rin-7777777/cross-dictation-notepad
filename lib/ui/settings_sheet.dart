@@ -147,6 +147,21 @@ class _SettingsSheetBody extends StatelessWidget {
                     ),
                     onChanged: store.setRestoreLastSession,
                   ),
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    value: store.videoCompatibilityMode,
+                    title: Text(
+                      '视频渲染兼容模式',
+                      style: TextStyle(fontSize: 14, color: palette.textPrimary),
+                    ),
+                    subtitle: Text(
+                      '有声音但画面全黑时打开它（改用 CPU 软件渲染，画面就能出来）。'
+                      '改完需要回首页重新进一次工作区才生效。',
+                      style:
+                          TextStyle(fontSize: 12, color: palette.textSecondary),
+                    ),
+                    onChanged: store.setVideoCompatibilityMode,
+                  ),
                   const SizedBox(height: 8),
                   _sectionLabel(context, '文件夹'),
                   _folderRow(

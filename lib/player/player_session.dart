@@ -18,10 +18,37 @@ const List<double> kPlaybackRates = <double>[
 /// 把 media_kit 的 `Player` + `VideoController` 包一层，
 /// 只暴露「打开 / 播放暂停 / ±秒跳转 / 调速 / 读进度」这些听写要用的能力。
 class PlayerSession {
-  PlayerSession();
+  PlayerSession({this.compatibilityMode = false}) {
+    // 【必须在 open() 之前创建 VideoController，所以放在构造函数里立刻建】
+    //
+    // media_kit 的原生实现（Windows/Android 都是）只 *订阅*
+    // `player.stream.videoParams`，并不读取"当前值"：
+    //     videoParamsSubscription = player.stream.videoParams.listen(...SetSize...);
+    // 一旦 controller 的创建晚于 `player.open()`，这个「视频尺寸」事件就被永久错过，
+    // 纹理尺寸停留在 0x0，而 media_kit 的 VideoTexture 在尺寸 <= 1 时什么都不画 ——
+    // 表现就是「有声音、进度和倍速都正常、但画面全黑」。
+    //
+    // 之前写成 `late final controller = VideoController(...)`（等 Video 控件第一次
+    // 构建时才创建）就会踩到这个坑：_bootstrap() 里的 `await Future.delayed(Duration.zero)`
+    // 只让出事件循环，并不保证首帧已经构建。
+    controller = VideoController(
+      player,
+      configuration: VideoControllerConfiguration(
+        enableHardwareAcceleration: !compatibilityMode,
+      ),
+    );
+  }
+
+  /// 渲染兼容模式：关掉硬件加速，改用 CPU 软件渲染。
+  ///
+  /// 默认关闭。只有极少数「有声音但画面全黑」的环境才需要打开；
+  /// 画面全黑更常见的原因是 controller 创建时机（见构造函数注释）
+  /// 或 media_kit_video 版本与 Flutter 版本不匹配（见 pubspec.yaml）。
+  final bool compatibilityMode;
 
   final Player player = Player();
-  late final VideoController controller = VideoController(player);
+
+  late final VideoController controller;
 
   final List<StreamSubscription<String>> _errorSubscriptions =
       <StreamSubscription<String>>[];

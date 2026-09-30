@@ -59,7 +59,9 @@ class _WorkspacePageState extends State<WorkspacePage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _session = PlayerSession();
+    _session = PlayerSession(
+      compatibilityMode: widget.store.videoCompatibilityMode,
+    );
     _session.watchErrors((message) {
       if (!mounted) return;
       setState(() => _playerError = message);

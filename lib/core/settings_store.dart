@@ -36,6 +36,7 @@ class SettingsStore extends ChangeNotifier {
   static const String _kThemeMode = 'theme_mode';
   static const String _kAutoSaveMillis = 'auto_save_millis';
   static const String _kRestoreLastSession = 'restore_last_session';
+  static const String _kVideoCompatibilityMode = 'video_compatibility_mode';
   static const String _kLastVideoPath = 'last_video_path';
   static const String _kLastTextPath = 'last_text_path';
   static const String _kLastVideoPosMs = 'last_video_pos_ms';
@@ -113,6 +114,19 @@ class SettingsStore extends ChangeNotifier {
 
   Future<void> setRestoreLastSession(bool value) async {
     await _prefs.setBool(_kRestoreLastSession, value);
+    notifyListeners();
+  }
+
+  /// 视频渲染兼容模式：默认**关闭**（即默认走硬件加速）。
+  ///
+  /// 只在极少数「有声音但画面全黑」的环境里需要打开（改用 CPU 软件渲染）。
+  /// 注意：画面全黑最常见的原因不是这里，而是 media_kit_video 版本与 Flutter
+  /// 版本不匹配（见 pubspec.yaml 里的说明）。
+  bool get videoCompatibilityMode =>
+      _prefs.getBool(_kVideoCompatibilityMode) ?? false;
+
+  Future<void> setVideoCompatibilityMode(bool value) async {
+    await _prefs.setBool(_kVideoCompatibilityMode, value);
     notifyListeners();
   }
 
