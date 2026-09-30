@@ -198,6 +198,8 @@ APK を直接インストールして使ってください**。
 | スマホでフォルダ選択後に再起動すると一覧が空 | 「すべてのファイルへのアクセス」が実際には許可されていません。システム設定で有効化 |
 | Windows で `Building with plugins requires symlink support` | 開発者モードを有効化：`start ms-settings:developers` |
 | 映像が真っ黒で音だけ聞こえる | H.264/AAC の mp4 で再現確認し、media_kit のエラー文言と一緒に issue で報告 |
+| スマホでシステムの「セキュアキーボード」が出て日本語が打てない | v1.0.3 で修正：エディタの `enableSuggestions` は true のままにする |
+| スマホで開き直すと再生位置が 0 に戻る | v1.0.3 で修正：復元時に duration を待ってから seek |
 
 ## 11. ライセンス
 

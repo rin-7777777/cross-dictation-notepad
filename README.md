@@ -176,6 +176,8 @@ powershell -ExecutionPolicy Bypass -File .\tool\build_windows.ps1
 | 手机上选完文件夹、重启后列表为空 | 「所有文件访问」没真的打开，去系统设置里开 |
 | Windows 提示 `Building with plugins requires symlink support` | 开启开发者模式：`start ms-settings:developers` |
 | 视频黑屏只有声音 | 换一个 H.264/AAC 的 mp4 复现，并把 media_kit 的报错文本一起提 issue |
+| 手机上是系统「安全键盘」、打不出日文 | 已修（v1.0.3）：编辑框的 `enableSuggestions` 必须是 true |
+| 手机重开后视频进度回到 0 | 已修（v1.0.3）：恢复进度时等时长解析出来再 seek |
 
 ## 十一、许可
 

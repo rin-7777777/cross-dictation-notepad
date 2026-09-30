@@ -229,8 +229,13 @@ class _EditorPaneState extends State<EditorPane> {
         textAlignVertical: TextAlignVertical.top,
         keyboardType: TextInputType.multiline,
         textInputAction: TextInputAction.newline,
+        // 【不要改成 false！】
+        // Android 上 enableSuggestions: false 会给输入框打上「不要建议 / 不要个性化学习」
+        // 的标记，第三方输入法（搜狗、日文输入法等）会被系统换成受限的「安全键盘」，
+        // 甚至直接打不出日文 —— 见 flutter/flutter#192714、flutter/engine#46037。
+        enableSuggestions: true,
+        // 听写时不希望输入法自动改写用词，所以自动纠正仍然关掉（不影响输入法本身能否调起）。
         autocorrect: false,
-        enableSuggestions: false,
         cursorColor: palette.primary,
         style: TextStyle(
           fontSize: 16,

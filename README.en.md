@@ -205,6 +205,8 @@ the APK yourself**.
 | Phone: folder list is empty after a restart | "All files access" was not really granted — enable it in system settings |
 | Windows: `Building with plugins requires symlink support` | enable Developer Mode: `start ms-settings:developers` |
 | Video is black but audio plays | reproduce with an H.264/AAC mp4 and report it together with media_kit's error text |
+| Phone shows the system "secure keyboard" and cannot type Japanese | fixed in v1.0.3: the editor's `enableSuggestions` must stay true |
+| Video position resets to 0 after reopening on a phone | fixed in v1.0.3: the restore path now waits for the duration before seeking |
 
 ## 11. License
 

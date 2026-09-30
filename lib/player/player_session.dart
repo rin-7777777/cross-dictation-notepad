@@ -72,7 +72,31 @@ class PlayerSession {
     await player.setRate(rate);
     await player.open(Media(path), play: false);
     if (position > Duration.zero) {
-      await player.seek(position);
+      await _restorePosition(position);
+    }
+  }
+
+  /// 恢复上次的播放进度。
+  ///
+  /// 直接在 `open()` 之后 seek，在 Android 上有时会被丢掉（时长/视频输出还没就绪，
+  /// 用户实测表现为「重开 App 后进度回到 0」）。所以这里先等时长解析出来再 seek，
+  /// 之后核对一次位置，没到位就补一次。
+  Future<void> _restorePosition(Duration target) async {
+    final deadline = DateTime.now().add(const Duration(seconds: 4));
+    while (player.state.duration <= Duration.zero &&
+        DateTime.now().isBefore(deadline)) {
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+    }
+    final total = player.state.duration;
+    var value = target;
+    if (total > Duration.zero && value > total) value = total;
+    await player.seek(value);
+    for (var attempt = 0; attempt < 5; attempt++) {
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+      final deltaMs =
+          (player.state.position - value).inMilliseconds.abs();
+      if (deltaMs <= 2000) return;
+      await player.seek(value);
     }
   }
 
