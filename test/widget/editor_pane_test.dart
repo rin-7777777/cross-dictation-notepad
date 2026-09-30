@@ -193,7 +193,7 @@ void main() {
         '查找替换',
         '保存',
         '设置',
-        '视频文件夹',
+        '视频/音频文件夹',
         '文本文件夹',
       ]) {
         expect(find.text(label), findsOneWidget, reason: '侧边栏应该有「$label」');

@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                 _folderCard(
                   context,
                   isVideo: true,
-                  label: '视频文件夹',
+                  label: '视频/音频文件夹',
                   icon: Icons.movie_outlined,
                   value: store.videoFolder,
                 ),
@@ -245,7 +245,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 18),
                 Text(
-                  '换设备时，用系统文件管理器把「视频文件夹」和「文本文件夹」拷到新设备，'
+                  '换设备时，用系统文件管理器把「视频/音频文件夹」和「文本文件夹」拷到新设备，'
                   '再在新设备上重新选择这两个文件夹即可；播放进度和光标位置不会跟着走。',
                   style: TextStyle(
                     fontSize: 12,

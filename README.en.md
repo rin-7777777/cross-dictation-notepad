@@ -11,14 +11,14 @@ Play a **local video** while typing the source text into a **plain-text editor**
 codebase for **Android phones and Windows PCs**.
 
 **Deliberately not included**: no subtitle timeline, no bilingual subtitles, no subtitle formats, no
-import/export inside the app, no network, no sync, no data migration. Just "one video folder +
+import/export inside the app, no network, no sync, no data migration. Just "one video/audio folder +
 one text folder + one plain-text box".
 
 ---
 
 ## 1. What it is
 
-- You pick **one video folder** and **one text folder**; the app only reads those two.
+- You pick **one video/audio folder** and **one text folder**; the app only reads those two.
 - Home → "Start working" → pick a video → pick a `.txt`, or type a name to create one.
 - Workspace: video on top, text below, with a row of `-5s -3s -1s ⏯ +1s +3s +5s` buttons and
   0.25x–2x speed.
@@ -33,13 +33,14 @@ course or meeting videos line by line.
 | Area | What it does |
 | --- | --- |
 | Folders | Pick the video/text folder on first launch, paths are remembered, changeable in Settings, with a "check permission" entry |
-| Lists | Video folder lists videos by extension (natural order: `Lesson2` before `Lesson10`); text folder lists only `.txt` |
+| Lists | Video/audio folder lists both videos and audio by extension (natural order: `Lesson2` before `Lesson10`); text folder lists only `.txt` |
 | New text | Type the file name yourself (`.txt` is appended); if it exists you are asked whether to open it |
 | Video | Local playback (media_kit / libmpv); `±1s / ±3s / ±5s` jumps; eight speeds from 0.25x to 2x; a **draggable / tappable** progress bar with `position / duration`; fullscreen button |
+| Audio | Plays `mp3 / m4a / flac / wav / ogg / opus / aac / wma / ape` as well; for audio-only files the top area shows a "♪ audio playing" panel instead of a black box, and the seek bar / ± buttons work the same |
 | Layout | Top/bottom layout on both phone portrait and wide desktop (video above, editor below), max width 1280 |
 | Editing | Type / delete / copy-paste / undo / redo / find & replace (case toggle, replace all) / autosave |
 | Status bar | Character count, line count, cursor line:column, save state |
-| Sidebar | Undo, redo, find & replace, save, settings, video folder, text folder |
+| Sidebar | Undo, redo, find & replace, save, settings, video/audio folder, text folder |
 | Restore | Last video + TXT + playback position + speed + cursor + light/dark mode, all in internal config |
 | Light/Dark | Sky-blue light theme / near-black-and-deep-blue dark theme, one tap in the app bar |
 
@@ -49,7 +50,7 @@ course or meeting videos line by line.
 | --- | --- |
 | `flutter pub get` | ✅ all dependencies resolved (media_kit 1.2.6 / media_kit_video 1.3.1 / file_picker 8.3.7 / permission_handler 11.4.0 / shared_preferences 2.5.5) |
 | `flutter analyze` | ✅ **No issues found!** (23 source files + tests, zero error/warning/info) |
-| `flutter test` | ✅ **65 / 65 passing** (pure logic, editor session with real file I/O, UI interactions, progress-bar seeking) |
+| `flutter test` | ✅ **70 / 70 passing** (pure logic, editor session with real file I/O, UI interactions, progress-bar seeking) |
 | `flutter build apk --debug` | ✅ succeeded (with `libmpv.so` for three ABIs) |
 | `flutter build apk --release` | ✅ succeeded → `dist/dictation-notepad-android-release.apk` (~147 MB) |
 | `flutter build windows --release` | ✅ succeeded (exe + all DLLs incl. `libmpv-2.dll`); launch smoke test passed: the process stays alive and the media_kit plugin registers. Requires **VS Build Tools 2022 (C++ workload)** and **symlink support** (Developer Mode, or build elevated) |
@@ -148,7 +149,7 @@ the APK yourself**.
 - **Internal config** (SharedPreferences) stores: both folder paths, light/dark mode, autosave
   delay, last video and TXT, playback position, speed, cursor position. **Nothing is written into
   your working folders.**
-- The TXT contains **only the text** — no metadata; the video folder is never written to.
+- The TXT contains **only the text** — no metadata; the video/audio folder is never written to.
 - On the next launch it restores the last session automatically (can be disabled in Settings).
   Playback resumes paused; press play to continue.
 - **Moving to another device**: copy the two folders with your file manager and pick them again on

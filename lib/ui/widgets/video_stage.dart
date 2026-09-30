@@ -17,6 +17,7 @@ class VideoStage extends StatelessWidget {
     required this.onToggleFullscreen,
     required this.title,
     this.errorMessage,
+    this.audioOnly = false,
   });
 
   final PlayerSession session;
@@ -24,6 +25,10 @@ class VideoStage extends StatelessWidget {
   final VoidCallback onToggleFullscreen;
   final String title;
   final String? errorMessage;
+
+  /// 纯音频文件（mp3 / flac / m4a…）：不挂 `Video` 控件，改显示一块音频面板，
+  /// 免得整个上方区域是一片黑框。
+  final bool audioOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +41,15 @@ class VideoStage extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: <Widget>[
-                Video(
-                  controller: session.controller,
-                  fit: BoxFit.contain,
-                  // 自己画控制条，不要播放器自带的控件（也就没有可拖的时间轴）。
-                  controls: (_) => const SizedBox.shrink(),
-                ),
+                if (audioOnly)
+                  _audioPanel(palette)
+                else
+                  Video(
+                    controller: session.controller,
+                    fit: BoxFit.contain,
+                    // 自己画控制条，不要播放器自带的控件（也就没有可拖的时间轴）。
+                    controls: (_) => const SizedBox.shrink(),
+                  ),
                 Positioned(
                   left: 8,
                   top: 8,
@@ -82,8 +90,45 @@ class VideoStage extends StatelessWidget {
     );
   }
 
-  Widget _titlePill() {
-    return Container(
+  /// 纯音频时替代画面的面板（不然上方就是一大块黑框）。
+  Widget _audioPanel(AppPalette palette) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Icon(Icons.graphic_eq, size: 44, color: palette.primary),
+            const SizedBox(height: 12),
+            Text(
+              '音频播放中',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: palette.textPrimary,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12.5, color: palette.textSecondary),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              '没有画面是正常的：这是纯音频文件，下面的进度条和 ±秒 按钮一样能用',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 11.5, color: palette.textSecondary),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _titlePill() {    return Container(
       constraints: const BoxConstraints(maxWidth: 240),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(

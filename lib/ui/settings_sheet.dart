@@ -167,7 +167,7 @@ class _SettingsSheetBody extends StatelessWidget {
                   _folderRow(
                     context,
                     isVideo: true,
-                    label: '视频文件夹',
+                    label: '视频/音频文件夹',
                     value: store.videoFolder,
                   ),
                   const SizedBox(height: 10),

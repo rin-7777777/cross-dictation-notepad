@@ -1,7 +1,7 @@
 name: dictation_notepad
 description: "跨端听写记事本：播放本地视频 + 纯文本听写编辑（Android / Windows）。"
 publish_to: 'none'
-version: 1.0.3+4
+version: 1.0.4+5
 
 environment:
   # Dart 3.3 对应 Flutter 3.19；本项目只使用该版本起就稳定存在的 API。

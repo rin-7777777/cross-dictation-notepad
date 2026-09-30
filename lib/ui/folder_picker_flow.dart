@@ -85,7 +85,7 @@ Future<String?> changeFolderFlow(
   final messenger = ScaffoldMessenger.of(context);
   final picked = await pickFolderFlow(
     context,
-    dialogTitle: isVideo ? '选择视频文件夹' : '选择文本文件夹',
+    dialogTitle: isVideo ? '选择视频/音频文件夹' : '选择文本文件夹',
     initialDirectory: isVideo ? store.videoFolder : store.textFolder,
   );
   if (picked == null) return null;

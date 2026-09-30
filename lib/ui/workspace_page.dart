@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 
+import '../core/file_names.dart';
 import '../core/settings_store.dart';
 import '../core/text_file_service.dart';
 import '../core/time_format.dart';
@@ -257,6 +258,7 @@ class _WorkspacePageState extends State<WorkspacePage>
                         onToggleFullscreen: () => _setFullscreen(!_fullscreen),
                         title: p.basename(widget.videoPath),
                         errorMessage: _playerError,
+                        audioOnly: hasAudioExtension(p.basename(widget.videoPath)),
                       ),
                     ),
                     if (!_fullscreen)

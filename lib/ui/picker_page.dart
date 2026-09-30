@@ -63,7 +63,7 @@ class _PickerPageState extends State<PickerPage>
       final hasAccess = await FolderService.hasStorageAccess();
       final videos = videoFolder == null
           ? const <FileEntry>[]
-          : await FolderService.listVideos(videoFolder);
+          : await FolderService.listMedia(videoFolder);
       final texts = textFolder == null
           ? const <FileEntry>[]
           : await FolderService.listTexts(textFolder);
@@ -76,7 +76,7 @@ class _PickerPageState extends State<PickerPage>
           _error = '没有存储权限，读不到文件夹里的内容。'
               '请点右边「检查权限」，或到系统设置里打开「所有文件访问」。';
         } else if (videoFolder == null || textFolder == null) {
-          _error = '还没有设置视频文件夹或文本文件夹，请先到设置里选择。';
+          _error = '还没有设置视频/音频文件夹或文本文件夹，请先到设置里选择。';
         } else {
           _error = null;
         }
@@ -301,7 +301,7 @@ class _PickerPageState extends State<PickerPage>
     if (_videos.isEmpty) {
       return _emptyHint(
         palette,
-        '视频文件夹里还没有视频。\n把视频文件（$kVideoExtensionsHint）拷进视频文件夹，再点右上角刷新。',
+        '视频/音频文件夹里还没有可播放的文件。\n把视频或音频文件（$kMediaExtensionsHint）拷进去，再点右上角刷新。',
       );
     }
     return ListView.separated(

@@ -1,7 +1,7 @@
-/// 视频扩展名白名单与 TXT 文件名规则（纯 Dart，可单元测试）。
+/// 视频/音频扩展名白名单与 TXT 文件名规则（纯 Dart，可单元测试）。
 library;
 
-/// 视频文件夹里认作视频的扩展名。
+/// 「视频/音频文件夹」里认作视频的扩展名。
 const List<String> kVideoExtensions = <String>[
   '.mp4',
   '.mkv',
@@ -24,9 +24,34 @@ const List<String> kVideoExtensions = <String>[
   '.f4v',
 ];
 
+/// 「视频/音频文件夹」里认作音频的扩展名（mpv 都能直接播）。
+const List<String> kAudioExtensions = <String>[
+  '.mp3',
+  '.m4a',
+  '.m4b',
+  '.aac',
+  '.flac',
+  '.wav',
+  '.ogg',
+  '.oga',
+  '.opus',
+  '.wma',
+  '.mka',
+  '.ape',
+  '.aiff',
+  '.aif',
+  '.amr',
+  '.wv',
+  '.tta',
+];
+
 /// 供界面显示的扩展名提示。
 const String kVideoExtensionsHint =
     'mp4 / mkv / avi / mov / wmv / flv / webm / m4v / mpg / mpeg / ts / m2ts / 3gp / rmvb / rm / ogv / vob / asf / f4v';
+
+/// 视频 + 音频的扩展名提示（「视频/音频文件夹」用）。
+const String kMediaExtensionsHint =
+    'mp4 / mkv / avi / mov / webm / flv / m4v / ts … 以及音频 mp3 / m4a / flac / wav / ogg / opus / aac / wma / ape';
 
 bool hasVideoExtension(String fileName) {
   final lower = fileName.toLowerCase();
@@ -35,6 +60,20 @@ bool hasVideoExtension(String fileName) {
   }
   return false;
 }
+
+bool hasAudioExtension(String fileName) {
+  final lower = fileName.toLowerCase();
+  for (final extension in kAudioExtensions) {
+    if (lower.endsWith(extension)) return true;
+  }
+  return false;
+}
+
+/// 视频或音频：两者都放「视频/音频文件夹」，都能被播放器打开。
+///
+/// 纯音频文件没有画面，界面会显示一块「音频播放中」的面板而不是黑框。
+bool hasMediaExtension(String fileName) =>
+    hasVideoExtension(fileName) || hasAudioExtension(fileName);
 
 bool hasTxtExtension(String fileName) => fileName.toLowerCase().endsWith('.txt');
 

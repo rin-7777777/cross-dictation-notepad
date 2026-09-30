@@ -247,7 +247,7 @@ class AppSidebar extends StatelessWidget {
         color: palette.textPrimary,
       ),
       title: Text(
-        isVideo ? '视频文件夹' : '文本文件夹',
+        isVideo ? '视频/音频文件夹' : '文本文件夹',
         style: TextStyle(fontSize: 14, color: palette.textPrimary),
       ),
       subtitle: Text(

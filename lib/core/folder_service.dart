@@ -140,9 +140,9 @@ class FolderService {
     if (isAndroid) await openAppSettings();
   }
 
-  /// 列出视频文件夹里的视频。
-  static Future<List<FileEntry>> listVideos(String folder) =>
-      _list(folder, hasVideoExtension);
+  /// 列出「视频/音频文件夹」里的视频与音频文件。
+  static Future<List<FileEntry>> listMedia(String folder) =>
+      _list(folder, hasMediaExtension);
 
   /// 列出文本文件夹里的 .txt。
   static Future<List<FileEntry>> listTexts(String folder) =>

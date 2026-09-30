@@ -27,7 +27,7 @@ class _SetupPageState extends State<SetupPage> {
     try {
       final picked = await pickFolderFlow(
         context,
-        dialogTitle: isVideo ? '选择视频文件夹' : '选择文本文件夹',
+        dialogTitle: isVideo ? '选择视频/音频文件夹' : '选择文本文件夹',
         initialDirectory: isVideo ? store.videoFolder : store.textFolder,
       );
       if (picked == null) return;
@@ -79,8 +79,8 @@ class _SetupPageState extends State<SetupPage> {
             const SizedBox(height: 16),
             _FolderTile(
               icon: Icons.movie_outlined,
-              label: '视频文件夹',
-              hint: '放要听写的本地视频（$kVideoExtensionsHint）',
+              label: '视频/音频文件夹',
+              hint: '放要听写的本地视频或音频（$kMediaExtensionsHint）',
               value: store.videoFolder,
               busy: _busy,
               onChoose: () => _choose(isVideo: true),
