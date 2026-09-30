@@ -76,7 +76,7 @@ class VideoStage extends StatelessWidget {
             ),
           ),
           TransportBar(session: session),
-          PlaybackProgress(session: session, trailingLabel: title),
+          _SessionProgress(session: session, trailingLabel: title),
         ],
       ),
     );
@@ -125,6 +125,36 @@ class VideoStage extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// 把播放器的位置 / 时长数据流接到纯组件 [PlaybackProgress] 上。
+class _SessionProgress extends StatelessWidget {
+  const _SessionProgress({required this.session, required this.trailingLabel});
+
+  final PlayerSession session;
+  final String trailingLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<Duration>(
+      stream: session.player.stream.position,
+      initialData: session.player.state.position,
+      builder: (context, positionSnapshot) {
+        return StreamBuilder<Duration>(
+          stream: session.player.stream.duration,
+          initialData: session.player.state.duration,
+          builder: (context, durationSnapshot) {
+            return PlaybackProgress(
+              position: positionSnapshot.data ?? Duration.zero,
+              duration: durationSnapshot.data ?? Duration.zero,
+              onSeek: session.seek,
+              trailingLabel: trailingLabel,
+            );
+          },
+        );
+      },
     );
   }
 }

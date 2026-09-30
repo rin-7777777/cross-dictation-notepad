@@ -10,7 +10,7 @@
 Play a **local video** while typing the source text into a **plain-text editor**. One Flutter
 codebase for **Android phones and Windows PCs**.
 
-**Deliberately not included**: no timeline, no bilingual subtitles, no subtitle formats, no
+**Deliberately not included**: no subtitle timeline, no bilingual subtitles, no subtitle formats, no
 import/export inside the app, no network, no sync, no data migration. Just "one video folder +
 one text folder + one plain-text box".
 
@@ -35,7 +35,7 @@ course or meeting videos line by line.
 | Folders | Pick the video/text folder on first launch, paths are remembered, changeable in Settings, with a "check permission" entry |
 | Lists | Video folder lists videos by extension (natural order: `Lesson2` before `Lesson10`); text folder lists only `.txt` |
 | New text | Type the file name yourself (`.txt` is appended); if it exists you are asked whether to open it |
-| Video | Local playback (media_kit / libmpv); `±1s / ±3s / ±5s` jumps; eight speeds from 0.25x to 2x; read-only progress bar and `position / duration`; fullscreen button |
+| Video | Local playback (media_kit / libmpv); `±1s / ±3s / ±5s` jumps; eight speeds from 0.25x to 2x; a **draggable / tappable** progress bar with `position / duration`; fullscreen button |
 | Layout | Top/bottom layout on both phone portrait and wide desktop (video above, editor below), max width 1280 |
 | Editing | Type / delete / copy-paste / undo / redo / find & replace (case toggle, replace all) / autosave |
 | Status bar | Character count, line count, cursor line:column, save state |
@@ -49,7 +49,7 @@ course or meeting videos line by line.
 | --- | --- |
 | `flutter pub get` | ✅ all dependencies resolved (media_kit 1.2.6 / media_kit_video 1.3.1 / file_picker 8.3.7 / permission_handler 11.4.0 / shared_preferences 2.5.5) |
 | `flutter analyze` | ✅ **No issues found!** (23 source files + tests, zero error/warning/info) |
-| `flutter test` | ✅ **61 / 61 passing** (pure logic, editor session with real file I/O, UI interactions) |
+| `flutter test` | ✅ **65 / 65 passing** (pure logic, editor session with real file I/O, UI interactions, progress-bar seeking) |
 | `flutter build apk --debug` | ✅ succeeded (with `libmpv.so` for three ABIs) |
 | `flutter build apk --release` | ✅ succeeded → `dist/dictation-notepad-android-release.apk` (~147 MB) |
 | `flutter build windows --release` | ✅ succeeded (exe + all DLLs incl. `libmpv-2.dll`); launch smoke test passed: the process stays alive and the media_kit plugin registers. Requires **VS Build Tools 2022 (C++ workload)** and **symlink support** (Developer Mode, or build elevated) |
@@ -189,8 +189,9 @@ the APK yourself**.
   slim it down.
 - Text is always read/written as **UTF-8**; opening a legacy non-UTF-8 file shows mojibake (you can
   still edit and save it as UTF-8).
-- The video progress bar is **read-only**; jumping is done only with `±1s / ±3s / ±5s` (matching
-  the "no timeline" requirement).
+- The progress bar can be dragged or tapped to seek (it previews the target time while dragging and
+  seeks on release); `±1s / ±3s / ±5s` are for fine adjustment. "No timeline" means no *subtitle*
+  timeline, not an unseekable bar.
 
 ## 10. Troubleshooting
 
