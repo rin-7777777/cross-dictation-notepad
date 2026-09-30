@@ -28,3 +28,11 @@
 | --- | --- |
 | Android 手机 | `dictation-notepad-android-release.apk` |
 | Windows 电脑 | `dictation-notepad-windows-x64.zip`（解压后双击 `dictation_notepad.exe`，整目录一起用） |
+## 文件校验（SHA-256）/ Checksums
+
+| 文件 | 大小 | SHA-256 |
+| --- | --- | --- |
+| dictation-notepad-android-release.apk | 146.8 MB | `dc3a5d6e8f525cd8927a18564863216b0662d23a53c260e8aa9149f2846b4af2` |
+| dictation-notepad-windows-x64.zip | 30.7 MB | `19dead843eaabea559eff66929ef1c924ca554c3efa7eb43ff520b664e8f0d07` |
+
+Windows 上核对：`Get-FileHash .\dictation-notepad-android-release.apk -Algorithm SHA256`

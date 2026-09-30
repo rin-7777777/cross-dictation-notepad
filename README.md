@@ -45,7 +45,7 @@
 | `flutter build apk --debug` | ✅ 成功（含 libmpv.so 三个 ABI） |
 | `flutter build apk --release` | ✅ 成功，产物 `dist/dictation-notepad-android-release.apk`（约 147 MB） |
 | `flutter build windows --release` | ✅ 成功（exe + 全部 DLL，含 `libmpv-2.dll`），启动冒烟测试通过：进程存活、media_kit 插件注册正常。构建需要 **VS Build Tools 2022（C++ 工作负载）** 和**符号链接权限**（开发者模式，或直接提权构建） |
-| 真机 / 桌面 UI 逐项点测 | ⚠️ **未做**：开发机没有连手机、也没有模拟器；桌面版只做了启动冒烟测试，没有逐项点过界面 |
+| 真机 / 桌面 UI 逐项点测 | ✅ **已逐项点测通过**（Android 手机 + Windows 电脑）：视频与音频播放、进度条拖动跳转、±秒 跳转、倍速、全屏横竖屏切换、输入法、撤销/重做、查找替换、自动保存、杀掉重开恢复上次工作 |
 
 > 详细记录（含实测踩到的真实问题与修法）见 [docs/测试清单.md](docs/测试清单.md)。
 
@@ -153,11 +153,11 @@ powershell -ExecutionPolicy Bypass -File .\tool\build_windows.ps1
 
 ## 九、已知限制
 
-- **Windows 桌面版已能编译通过，但界面未逐项点测**：产物是「一个文件夹」（exe + 若干 DLL + `data/`），
+- **分发 Windows 版要拷整个文件夹**：产物是「一个文件夹」（exe + 若干 DLL + `data/`），
   分发时要整个文件夹一起拷。构建需要 Visual Studio 2022 的 C++ 桌面开发工作负载，
   以及**符号链接权限**（开启开发者模式并重启，或者以管理员身份构建）。
-- **手机端未在真机上跑过**（开发机没有设备/模拟器）：APK 能编出来、通过 `apksigner` 校验，
-  但没有实际点过界面。第一次真机运行请按 [docs/测试清单.md](docs/测试清单.md) 第四节走一遍。
+- **已在 Android 手机与 Windows 电脑上逐项点测通过**（2026-10）：视频与音频播放、进度条拖动、
+  ±秒 跳转、倍速、全屏与横竖屏切换、输入法、撤销/重做、查找替换、自动保存、杀掉重开恢复上次工作。
 - **release APK 用的是 Android 调试证书签名**（Flutter 模板默认）：可以直装，但不能上架。
   上架请自行配置 `android/app/build.gradle.kts` 里的 `signingConfig`。
 - 没装 NDK 时 `libflutter.so` 不会被剥离符号，APK 偏大（release 约 147 MB；正常 40–60 MB）。

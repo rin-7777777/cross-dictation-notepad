@@ -54,7 +54,7 @@ course or meeting videos line by line.
 | `flutter build apk --debug` | ✅ succeeded (with `libmpv.so` for three ABIs) |
 | `flutter build apk --release` | ✅ succeeded → `dist/dictation-notepad-android-release.apk` (~147 MB) |
 | `flutter build windows --release` | ✅ succeeded (exe + all DLLs incl. `libmpv-2.dll`); launch smoke test passed: the process stays alive and the media_kit plugin registers. Requires **VS Build Tools 2022 (C++ workload)** and **symlink support** (Developer Mode, or build elevated) |
-| Tapping through the phone / desktop UI | ⚠️ **not done**: no phone or emulator on the dev machine; the desktop build only got a launch smoke test, not a click-through |
+| Tapping through the phone / desktop UI | ✅ **done** — verified item by item on an Android phone and on Windows: video & audio playback, drag-to-seek, ±s jumps, speed, fullscreen rotation, IME, undo/redo, find & replace, autosave, restore after killing the app |
 
 > Full notes (including the real problems hit while testing and how they were fixed) are in
 > [docs/测试清单.md](docs/测试清单.md) (Chinese).
@@ -174,14 +174,13 @@ the APK yourself**.
 
 ## 9. Known limitations
 
-- **The Windows desktop build compiles, but its UI has not been clicked through**: the output is a
+- **Distributing the Windows build means copying the whole folder**: the output is a
   *folder* (exe + several DLLs + `data/`) — distribute the whole folder, not just the exe. Building
   needs Visual Studio 2022 with the C++ desktop workload and **symlink support** (enable Developer
   Mode and reboot, or build elevated).
-- **The phone build has never been run on a real device** (no device or emulator on the dev
-  machine): the APK builds and passes `apksigner` verification, but the UI has not been tapped
-  through. For the first real run, follow section 4 of
-  [docs/测试清单.md](docs/测试清单.md).
+- **Verified item by item on a real Android phone and on Windows** (2026-10): video & audio
+  playback, drag-to-seek, ±s jumps, speed, fullscreen and portrait/landscape switching, IME,
+  undo/redo, find & replace, autosave, restore after killing the app.
 - **The release APK is signed with the Android debug key** (Flutter's template default): fine for
   sideloading, not for publishing. Configure `signingConfig` in
   `android/app/build.gradle.kts` if you need a store build.
