@@ -1,0 +1,41 @@
+name: dictation_notepad
+description: "跨端听写记事本：播放本地视频 + 纯文本听写编辑（Android / Windows）。"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  # Dart 3.3 对应 Flutter 3.19；本项目只使用该版本起就稳定存在的 API。
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # 视频播放：media_kit（libmpv），Android / Windows 均官方支持。
+  media_kit: ^1.1.0
+  media_kit_video: ^1.2.0
+  media_kit_libs_video: ^1.0.0
+
+  # 文件夹选择（Android 走 SAF，Windows 走系统目录对话框）。
+  file_picker: ^8.0.0
+
+  # 软件内部配置：文件夹路径、上次工作、光标、日夜模式。
+  shared_preferences: ^2.2.0
+
+  # Android“所有文件访问”授权（长期访问用户选择的文件夹）。
+  permission_handler: ^11.0.0
+
+  path: ^1.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+# 说明：
+# 上面的版本号都写成“确定存在”的下界，交给 pub 自己解析到最新的兼容版本，
+# 避免锁定某个我无法联网核实的补丁号。如果解析失败，执行：
+#   flutter pub upgrade --major-versions

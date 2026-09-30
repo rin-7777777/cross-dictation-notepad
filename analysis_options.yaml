@@ -1,0 +1,19 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # 这几条在 flutter_lints 里已经默认开启，这里显式写出来表明是有意的。
+    # 注意：它们只会产生 info 级提示，不影响 `flutter build` / `flutter run`。
+    # 如果 `flutter analyze` 因为这些 info 以非 0 退出，用：
+    #   flutter analyze --no-fatal-infos
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_final_locals: true
+    unnecessary_this: true
+    use_super_parameters: true
+
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - windows/**
