@@ -36,3 +36,7 @@
 | dictation-notepad-windows-x64.zip | 30.7 MB | `19dead843eaabea559eff66929ef1c924ca554c3efa7eb43ff520b664e8f0d07` |
 
 Windows 上核对：`Get-FileHash .\dictation-notepad-android-release.apk -Algorithm SHA256`
+## 许可证 / License
+
+本项目采用 **MIT 许可证**（见仓库根目录 `LICENSE`）。第三方依赖保留各自许可证；
+打包产物内含 libmpv（mpv）二进制，分发时请一并遵守其许可证。

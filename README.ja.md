@@ -204,5 +204,9 @@ APK を直接インストールして使ってください**。
 
 ## 11. ライセンス
 
-現時点でオープンソースライセンスは付けていません。公開する場合は `LICENSE`（MIT など）を
-追加することをおすすめします — 判断はお任せします。
+本プロジェクトは **MIT ライセンス** で公開しています（全文は [LICENSE](LICENSE)）。
+
+サードパーティの依存関係はそれぞれのライセンスのままです（Flutter BSD-3-Clause、
+media_kit MIT、file_picker MIT、permission_handler MIT、shared_preferences BSD-3-Clause）。
+なお、ビルド成果物には libmpv（mpv）のバイナリが含まれるため、配布時はそのライセンス
+（LGPL-2.1-or-later / GPLv2-or-later、ビルド内容によります）にも従う必要があります。

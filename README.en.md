@@ -210,5 +210,9 @@ the APK yourself**.
 
 ## 11. License
 
-No open-source license has been added yet. If you plan to open-source it, add a `LICENSE`
-(e.g. MIT) — your call.
+This project is released under the **MIT License** — see [LICENSE](LICENSE).
+
+Third-party dependencies keep their own licenses (Flutter BSD-3-Clause, media_kit MIT,
+file_picker MIT, permission_handler MIT, shared_preferences BSD-3-Clause). Note that the
+packaged builds bundle a libmpv (mpv) binary, so distributing them also means complying with
+its license (LGPL-2.1-or-later / GPLv2-or-later, depending on the build).

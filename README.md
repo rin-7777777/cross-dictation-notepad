@@ -182,4 +182,9 @@ powershell -ExecutionPolicy Bypass -File .\tool\build_windows.ps1
 
 ## 十一、许可
 
-仓库暂未附带开源许可证。要开源的话建议加一份 `LICENSE`（例如 MIT）——你说了算。
+本项目采用 **MIT 许可证**，全文见 [LICENSE](LICENSE)。
+
+第三方依赖保留各自的许可证（Flutter BSD-3-Clause、media_kit MIT、file_picker MIT、
+permission_handler MIT、shared_preferences BSD-3-Clause）。另外提醒：打包产物里含有
+libmpv（mpv）二进制，分发时请一并遵守它的许可证（LGPL-2.1-or-later / GPLv2-or-later，
+以实际构建为准）。
